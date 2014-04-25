@@ -17,14 +17,21 @@
                 });
                 
                 elm.bind('touchmove', function (e) {
-                    elm[0].style.left = e.changedTouches[0].clientX + "px";
+                    
+                    
+                    
+                    i = (e.changedTouches[0].clientX < endX) ? i - 1 : i + 1;
+                    
+                    endX = e.changedTouches[0].clientX;
+                    
+                    elm[0].style.left = i + "px";
                 });
                 
                 elm.bind('touchend', function (e) {
                     endX = e.changedTouches[0].clientX;
                     //elm[0].style.left = "";
                     // elm[0].style.right = "";
-                    
+                    console.log(e.changedTouches[0]);
                     console.log(elm[0].style.left);
                     console.log(elm[0].style.right);
                     console.log(elm[0].style.position);
