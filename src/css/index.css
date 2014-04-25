@@ -1,0 +1,29 @@
+.fa {
+    margin-right:20px;
+    font-size:2em;    
+}
+
+.task {
+    font-size:1.25em;
+}
+
+.fa-plus-circle{
+    float:right;
+    margin:0px;
+}
+
+.fa-plus-circle:hover {
+  color: #1e7dc8;
+}
+
+.topcoat-list__header {
+    height:26px;
+}
+
+.topcoat-list__item:hover {
+   border-left:1px solid blue;
+}
+
+.fa-heart {
+    /*color:red;*/
+}
