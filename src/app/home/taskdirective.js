@@ -25,12 +25,12 @@
                 });
                 
                 elm.bind('touchend', function (e) {
-                    //se o ponto de partida final - o inicial(andou para direita) for maior que metade da tela
+                    //se o ponto de partida final - o inicial for maior que metade da tela (andou para direita)
                     if ((e.changedTouches[0].clientX - startX) > (elm[0].clientWidth / 2)) {
-                        alert("Finalizado!");
-                    //se o ponto de partida inicial - o final(andou para esquerda) for maior que metade da tela    
+                        scope.$apply(att.right);
+                    //se o ponto de partida inicial - o final for maior que metade da tela (andou para esquerda)    
                     } else if ((startX - e.changedTouches[0].clientX) > (elm[0].clientWidth / 2)) {
-                        alert("Excluido!");
+                        scope.$apply(att.left);
                     }
                     elm[0].style.left = '';
                     

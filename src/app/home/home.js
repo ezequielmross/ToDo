@@ -11,7 +11,8 @@
                     style: {
                         color: "blue"
                     }
-                }
+                },
+                status: true
             },
             {
                 name: "Task2",
@@ -20,13 +21,24 @@
                     style: {
                         color: "red"
                     }
-                }
+                },
+                status: true
             }
         ];//fim tasks
     };
     
     Home.prototype.setHello = function () {
         this.hello = false;
+    };
+    
+    Home.prototype.finalizado = function (task) {
+        var i = this.tasks.indexOf(task);
+        this.tasks[i].status = false;
+    };
+    
+    Home.prototype.excluir = function (task) {
+        var i = this.tasks.indexOf(task);
+        this.tasks.splice(i, 1);
     };
     
     

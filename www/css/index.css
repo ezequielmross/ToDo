@@ -13,15 +13,22 @@
 }
 
 .fa-plus-circle:hover {
-  color: #1e7dc8;
+    color: rgb(69, 110, 238);
 }
 
 .topcoat-list__header {
     height:26px;
 }
 
+.topcoat-list__item {
+    background-color: #454646;   
+}
 .topcoat-list__item:hover {
-   border-left:1px solid blue;
+    border-left:1px solid blue;
+}
+
+.topcoat-list__container {
+    background-color: rgb(69, 110, 238); 
 }
 
 .fa-heart {

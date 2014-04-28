@@ -1,8 +1,8 @@
 <div class="topcoat-list">
     <h3 class="topcoat-list__header">Tasks <i class="fa fa-plus-circle"></i></h3>
-    <ul class="topcoat-list__container">
-        <li class="topcoat-list__item" ng-repeat="task in Home.tasks" ng-task>
-            <i ng-class="task.icon.name" ng-style="task.icon.style"></i><span class="task" ng-bind="task.name"></span>
+    <ul class="topcoat-list__container" style="overflow:hidden">
+        <li class="topcoat-list__item" ng-repeat="task in Home.tasks" ng-task right="Home.finalizado(task)" left="Home.excluir(task)">
+            <i ng-class="task.icon.name" ng-style="task.icon.style"></i><span class="task" ng-bind="task.name" ng-show="task.status"></span>
         </li>
     </ul>
 </div>
