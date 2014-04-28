@@ -9,7 +9,7 @@
                 icon: {
                     name: "fa fa-thumb-tack",
                     style: {
-                        color: "red"
+                        color: "blue"
                     }
                 }
             },
@@ -18,7 +18,7 @@
                 icon: {
                     name: "fa fa-heart",
                     style: {
-                        color: "green"
+                        color: "red"
                     }
                 }
             }

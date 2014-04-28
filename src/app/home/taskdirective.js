@@ -1,41 +1,39 @@
-/*global angular, console*/
+/*global angular, console, alert*/
 (function taskDirective() {
     'use strict';
     
     var ngTask = function () {
         return {
             restrict: 'A',
-            scope: {
-                ngTask: '='
-            },
-            template: '<i ng-class="ngTask.icon.name" ng-style="ngTask.icon.style"></i><span class="task" ng-bind="ngTask.name"></span>',
             link: function (scope, elm, att) {
-                var startX, endX, i = 0;
+                var startX, endX;
+                
                 elm.bind('touchstart', function (e) {
+                    //ponto de partida
                     startX = e.changedTouches[0].clientX;
+                    //atualizando seu tipo de posição
                     elm[0].style.position = "relative";
+                    
                 });
                 
                 elm.bind('touchmove', function (e) {
+                    //partida atual - inicial
+                    endX = e.changedTouches[0].clientX - startX;
+                    //aplicando o estilo left
+                    elm[0].style.left = endX + "px";
                     
-                    
-                    
-                    i = (e.changedTouches[0].clientX < endX) ? i - 1 : i + 1;
-                    
-                    endX = e.changedTouches[0].clientX;
-                    
-                    elm[0].style.left = i + "px";
                 });
                 
                 elm.bind('touchend', function (e) {
-                    endX = e.changedTouches[0].clientX;
-                    //elm[0].style.left = "";
-                    // elm[0].style.right = "";
-                    console.log(e.changedTouches[0]);
-                    console.log(elm[0].style.left);
-                    console.log(elm[0].style.right);
-                    console.log(elm[0].style.position);
-                    console.log(endX);
+                    //se o ponto de partida final - o inicial(andou para direita) for maior que metade da tela
+                    if ((e.changedTouches[0].clientX - startX) > (elm[0].clientWidth / 2)) {
+                        alert("Finalizado!");
+                    //se o ponto de partida inicial - o final(andou para esquerda) for maior que metade da tela    
+                    } else if ((startX - e.changedTouches[0].clientX) > (elm[0].clientWidth / 2)) {
+                        alert("Excluido!");
+                    }
+                    elm[0].style.left = '';
+                    
                 });
             }
         };
