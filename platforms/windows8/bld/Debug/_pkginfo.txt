@@ -1,0 +1,1 @@
+C:\Projetos\github\Todo\platforms\windows8\AppPackages\CordovaApp_0.0.1.1_AnyCPU_Debug_Test\CordovaApp_0.0.1.1_AnyCPU_Debug.appx

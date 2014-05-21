@@ -6,7 +6,7 @@ module.exports = function (grunt) {
             libjs: {
                 expand: true,
                 cwd: 'bower_components/',
-                src: ['bower_components/angular/angular.min.js', 'bower_components/angular-route/angular-route.min.js'],
+                src: ['angular/angular.js', 'angular-route/angular-route.js'],
                 dest: 'www/lib/'
             },
             topcoat: {
