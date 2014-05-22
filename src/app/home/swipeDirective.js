@@ -6,67 +6,77 @@
         return {
             restrict: 'A',
             link: function (scope, elm, att) {
-                var startX, lastX, touchStart, touchMove, touchEnd;
-                        if (window.navigator.msPointerEnabled) {
-                            // Pointer events are supported.
-                            touchStart = 'MSPointerDown';
-                            touchMove = 'MSPointerMove';
-                            touchEnd = 'MSPointerUp';
-                        } else {
-                            touchStart = 'touchstart';
-                            touchMove = 'touchmove';
-                            touchEnd = 'touchend';
-                        }
-                        function getGesturePointFromEvent(evt) {
-                            var point = {};
-
-                            if (evt.targetTouches) {
-                                point.x = evt.targetTouches[0].clientX;
-                                point.y = evt.targetTouches[0].clientY;
-                            } else {
-                                point.x = evt.clientX;
-                                point.y = evt.clientY;
-                            }
-
-                            return point;
-                        }
-                        function setAnimation(value) {
-                           // elm[0].style.transform = 'translate3d(' + endX + 'px,0,0)';
-                            var transformStyle = 'translateX(' + value + 'px)';
-                            elm[0].style.msTransform = transformStyle;
-                            elm[0].style.MozTransform = transformStyle;
-                            elm[0].style.webkitTransform = transformStyle;
-                            elm[0].style.transform = transformStyle;
-                        }
-                        function handleGestureMove(e) {
-                            lastX = getGesturePointFromEvent(e).x - startX;
-                            setAnimation(lastX);
-                        }
-                        function handleGestureEnd(e) {
-                            if (lastX > (elm[0].clientWidth / 2)) {
-                                scope.$apply(att.right);
-                                //se o ponto de partida inicial - o final for maior que metade da tela (andou para esquerda)    
-                            } else if ((lastX * -1) > (elm[0].clientWidth / 2)) {
-                                scope.$apply(att.left);
-                            }
-
-                            setAnimation(0);
-                            document.removeEventListener(touchMove, handleGestureMove, true);
-                            document.removeEventListener(touchEnd, handleGestureEnd, true);
-                        }
-
-                elm.bind(touchStart, function (e) {
+                var  startX = 0, lastX = 0, touch = {};
+                swipe.prototype.initTouch(touch);
+                
+                
+                elm.bind(touch.touchStart, function (e) {
                     //ponto de partida
-                    startX = getGesturePointFromEvent(e).x;
+                    startX = swipe.prototype.getGesturePointFromEvent(e).x;
                     console.log('start');
-                    document.addEventListener(touchMove, handleGestureMove, true);
-                    document.addEventListener(touchEnd, handleGestureEnd, true);
+                    document.addEventListener(touch.touchMove, handleGestureMove, true);
+                    document.addEventListener(touch.touchEnd, handleGestureEnd, true);
                 });
+                
+                function handleGestureMove(e) {
+                    lastX = swipe.prototype.getGesturePointFromEvent(e).x - startX;
+                    swipe.prototype.setAnimation(lastX, elm);
+                }
+                function handleGestureEnd(e) {
+                    if (lastX > (elm[0].clientWidth / 2)) {
+                        scope.$apply(att.right);
+                        //se o ponto de partida inicial - o final for maior que metade da tela (andou para esquerda)    
+                    } else if ((lastX * -1) > (elm[0].clientWidth / 2)) {
+                        scope.$apply(att.left);
+                    }
+                    
+                    swipe.prototype.setAnimation(0, elm);
+                    document.removeEventListener(touch.touchMove, handleGestureMove, true);
+                    document.removeEventListener(touch.touchEnd, handleGestureEnd, true);
+                }
             }
         };
     };
+    swipe.prototype.initTouch = function setAnimation(touch) {
+        //#IE CASE
+        if (window.navigator.msPointerEnabled) {
+            // Pointer events are supported only in IE.
+            touch.touchStart = 'MSPointerDown';
+            touch.touchMove = 'MSPointerMove';
+            touch.touchEnd = 'MSPointerUp';
+        } else {
+            touch.touchStart = 'touchstart';
+            touch.touchMove = 'touchmove';
+            touch.touchEnd = 'touchend';
+        }
+    };
     
-    //ngTask.$inject = [];
+    swipe.prototype.setAnimation = function setAnimation(value, elm) {
+        // elm[0].style.transform = 'translate3d(' + endX + 'px,0,0)';
+        var transformStyle = 'translateX(' + value + 'px)';
+        elm[0].style.msTransform = transformStyle;
+        elm[0].style.MozTransform = transformStyle;
+        elm[0].style.webkitTransform = transformStyle;
+        elm[0].style.transform = transformStyle;
+    };
+    swipe.prototype.getGesturePointFromEvent = function getGesturePointFromEvent(evt) {
+        var point = {};
+        
+        if (evt.targetTouches) {
+            point.x = evt.targetTouches[0].clientX;
+            point.y = evt.targetTouches[0].clientY;
+        } else if (evt.originalEvent && evt.originalEvent.targetTouches) {
+            point.x = evt.originalEvent.targetTouches[0].clientX;
+            point.y = evt.originalEvent.targetTouches[0].clientY;
+        } else {
+            //#IE CASE
+            point.x = evt.clientX;
+            point.y = evt.clientY;
+        }
+        
+        return point;
+    };
+    //swipe.$inject = [];
     
     angular.module("Todo").directive('swipe', swipe);
 }());
