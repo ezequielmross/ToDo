@@ -58,7 +58,7 @@
     angular.module("Todo").controller('HomeController', Home);
     
 }());
-//*global angular, console, alert, window, document*/
+/*global angular, console, alert, window, document*/
 (function swipeDirective() {
     'use strict';
 
@@ -126,7 +126,7 @@
         };
     };
 
-    //ngTask.$inject = [];
+    //swipe.$inject = [];
 
     angular.module("Todo").directive('swipe', swipe);
 }());
