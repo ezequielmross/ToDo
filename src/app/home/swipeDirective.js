@@ -13,7 +13,6 @@
                 elm.bind(touch.touchStart, function (e) {
                     //ponto de partida
                     startX = swipe.prototype.getGesturePointFromEvent(e).x;
-                    console.log('start');
                     document.addEventListener(touch.touchMove, handleGestureMove, true);
                     document.addEventListener(touch.touchEnd, handleGestureEnd, true);
                 });
@@ -37,7 +36,7 @@
             }
         };
     };
-    swipe.prototype.initTouch = function setAnimation(touch) {
+    swipe.prototype.initTouch = function initTouch(touch) {
         //#IE CASE
         if (window.navigator.msPointerEnabled) {
             // Pointer events are supported only in IE.
@@ -59,6 +58,7 @@
         elm[0].style.webkitTransform = transformStyle;
         elm[0].style.transform = transformStyle;
     };
+    
     swipe.prototype.getGesturePointFromEvent = function getGesturePointFromEvent(evt) {
         var point = {};
         
